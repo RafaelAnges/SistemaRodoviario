@@ -7,10 +7,12 @@ package sistemarodoviario.tela;
 
 import DAO.FaturasDAO;
 import DAO.PassagemDAO;
+import DTO.FaturasDTO;
 import DTO.PassagemDTO;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -25,9 +27,13 @@ public class Faturas extends javax.swing.JFrame {
     /**
      * Creates new form faturas
      */
+    FaturasDAO DAO;
     public Faturas() {
         initComponents();
-
+        try {
+            DAO = new FaturasDAO();
+        } catch (Exception e) {
+        }
         setLocationRelativeTo(this);
     }
 
@@ -236,8 +242,8 @@ public class Faturas extends javax.swing.JFrame {
     private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
   //     listarPassagem();
        
- 
-listarValoresFaturas();
+ confirma();
+
     }//GEN-LAST:event_btnConsultarActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -310,114 +316,27 @@ listarValoresFaturas();
     private javax.swing.JTextField txtTotal;
     // End of variables declaration//GEN-END:variables
 
-    public void dataInicio(){
-        String inicio, fim;
-        
-        inicio = formInicio.toString();
-        fim = formFim.toString();
-        
-        PassagemDTO objiniciodto = new PassagemDTO();
-        objiniciodto.setInicio(inicio);
-        objiniciodto.setFim(fim);
-        
-        FaturasDAO objiniciodao = new FaturasDAO();
-        objiniciodao.AtualizarFaturas().add(objiniciodto);
-        
-        
-    }
+  public void data(){
+      String dataInicio, dataFim;
+      
+      dataInicio = formInicio.toString();
+      dataFim = formFim.toString();
+      
+      FaturasDTO faturas = new FaturasDTO();
+      faturas.setDataInicio(dataInicio);
+      faturas.setDataFim(dataFim);
+      
+  }
     
-    private void listarValoresFaturas(){
+    
+    public void confirma(){
+        Vector tabelaFatura = new Vector();
+        tabelaFatura.add("dataSaida_p");
+        tabelaFatura.add("valor");
         
-        try {
-            
-            FaturasDAO objdatadao = new FaturasDAO();
-
-            DefaultTableModel model = (DefaultTableModel) tabelaFaturas.getModel();
-            model.setNumRows(0);
-
-            ArrayList<PassagemDTO> lista = objdatadao.AtualizarFaturas();
-
-            for (int num = 0; num < lista.size(); num++) {
-                model.addRow(new Object[]{
-                    lista.get(num).getDataSaida_p(),
-                    
-                    lista.get(num).getValor_p()
-
-                });
-
-            }
-        } catch (Exception erro) {
-            JOptionPane.showMessageDialog(null, "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa:" + erro);
-        }
-        
-        
+        DefaultTableModel tabelaFaturas = new DefaultTableModel(DAO.data(formInicio, formFim),tabelaFatura);
     }
     
     
     
-    /*
-    public void listarPassagem() {
-        try {
-
-            PassagemDAO objpassagemdao = new PassagemDAO();
-
-            DefaultTableModel model = (DefaultTableModel) tabelaFaturas.getModel();
-            model.setNumRows(0);
-
-            ArrayList<PassagemDTO> lista1 = objpassagemdao.AtualizarPassagem();
-
-            int num = 0;
-            
-                
-            for ( num = 0; num < lista1.size(); num++) {
-                model.addRow(new Object[]{
-                    
-                        
-                    
-                    
-                    lista1.get(num).getDataSaida_p(),
-                    lista1.get(num).getValor_p(),
-
-                            });
-
-            }
-
-        } catch (Exception erro) {
-            JOptionPane.showMessageDialog(null, "Lista Data fim:" + erro);
-        }
-    }
-
-
-    private void Calculo() {
-
-        try {
-            
-            
-            
-            PassagemDAO objpassagemdao = new PassagemDAO();
-            ResultSet rs = objpassagemdao.calcular();
-
-            while (rs.next()) {
-                txtTotal.setText(rs.getString(1));
-
-            }
-        } catch (SQLException erro) {
-            JOptionPane.showMessageDialog(null,"Calculo"+ erro);
-            
-        }
-
-    }
-    
-   public void enviar(){
-       String data;
-       data =  formfim.toString();
-       
-       PassagemDTO objenviodto = new PassagemDTO();
-        objenviodto.setData(data);
-        
-        PassagemDAO objpassagemdao = new PassagemDAO();
-        
-   }
-    
-   */
 }

@@ -22,8 +22,7 @@ public class PassagemDTO {
     private String horaSaida_p;
     private String veiculo_p;
     private int poltrona_p;
-    private String inicio;
-    private String fim;
+    
     private String vendidos;
     private String restam;
 
@@ -133,34 +132,6 @@ public class PassagemDTO {
      */
     public void setValor_p(String valor_p) {
         this.valor_p = valor_p;
-    }
-
-    /**
-     * @return the inicio
-     */
-    public String getInicio() {
-        return inicio;
-    }
-
-    /**
-     * @param inicio the inicio to set
-     */
-    public void setInicio(String inicio) {
-        this.inicio = inicio;
-    }
-
-    /**
-     * @return the fim
-     */
-    public String getFim() {
-        return fim;
-    }
-
-    /**
-     * @param fim the fim to set
-     */
-    public void setFim(String fim) {
-        this.fim = fim;
     }
 
     /**

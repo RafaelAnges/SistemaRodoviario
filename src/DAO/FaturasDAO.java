@@ -12,6 +12,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
+import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 
 /**
@@ -21,65 +24,34 @@ import javax.swing.JOptionPane;
 public class FaturasDAO {
     
     Connection conn;
-    PreparedStatement pstm;
-    ResultSet rs;
-    ArrayList<PassagemDTO> lista = new ArrayList<>();
-    String sql ;
-    PreparedStatement rt;
     
-    public void data(PassagemDTO Objiniciodto){
-         String sql = "SELECT dataSaida_p, valor_p FROM passagem where dataSaida_p > inicio and dataSaida_p < fim";
-    
-        conn = new ConexaoDAO().conectaBD();
-        
-        try {
-            
-            pstm = conn.prepareStatement(sql);
-            rt = pstm;
-             rt.execute();
-            rt.close();
-            
-            
-            
-        } catch (SQLException erro) {
-            JOptionPane.showMessageDialog(null, "CidadeDAO"+ erro);
-        }
-    }
-    private Statement st;
-     public ArrayList<PassagemDTO> AtualizarFaturas(){
-         
+   public Vector data(String dataInicio, String dataFim) throws Exception{
+       conn = new ConexaoDAO().conectaBD();
+       Vector tb = new Vector();
+       String sql = "select * from passagem where dataSaida_p >= dataInico and dataSaida_p <= dataFim";
+       PreparedStatement ps = conn.prepareStatement(sql);
+       ResultSet rs = ps.executeQuery();
+       while(rs.next()){
+           Vector n1 = new Vector();
+           n1.add(rs.getDate("dataSaida_p"));
+           n1.add(rs.getInt("valor_p"));
+           tb.add(n1);
+           
        
-       
-        
-        try {
-            
-            
-            rs= rt.executeQuery();
-            
-            while(rs.next()){
-                PassagemDTO objdataDTO = new PassagemDTO();
-                objdataDTO.setDataSaida_p(rs.getString("dataSaida_p"));
-                objdataDTO.setValor_p(rs.getString("valor_p"));
-                
-                
-                lista.add(objdataDTO);
-            }
-            
-        } catch (SQLException erro) {
-            JOptionPane.showMessageDialog(null, "CidadeDAO Atualizar:"+ erro);
-        }
-        return lista;
-        
-    }
+   }
              
-             
+            return tb; 
          
            
     
         
     
      
-     
+   }
+
+    public Vector data(JFormattedTextField formInicio, JFormattedTextField formFim) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
     
     
