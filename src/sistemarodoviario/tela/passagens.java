@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-
 /**
  *
  * @author rafae
@@ -23,19 +22,21 @@ public class passagens extends javax.swing.JFrame {
      */
     public passagens() {
         initComponents();
-        
+
         setLocationRelativeTo(this);
     }
-    
+
     private static passagens instancia = null;
+
     /**
      * Creates new form TelaCadAluno
      */
 
     public static passagens getInstancia() {
-        if (instancia == null)
+        if (instancia == null) {
             instancia = new passagens();
-        
+        }
+
         return instancia;
     }
 
@@ -201,13 +202,13 @@ public class passagens extends javax.swing.JFrame {
 
         ExcluirPassagem();
         listarValoresPassagem();
-       
+
 
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
 
-       listarValoresPassagem();
+        listarValoresPassagem();
 
     }//GEN-LAST:event_btnConsultarActionPerformed
 
@@ -257,7 +258,7 @@ public class passagens extends javax.swing.JFrame {
     private javax.swing.JTable tabelaPassagem;
     // End of variables declaration//GEN-END:variables
 
-private void listarValoresPassagem() {
+    private void listarValoresPassagem() {
         try {
 
             PassagemDAO objpassagemdao = new PassagemDAO();
@@ -269,7 +270,6 @@ private void listarValoresPassagem() {
 
             for (int num = 0; num < lista.size(); num++) {
                 model.addRow(new Object[]{
-                    
                     lista.get(num).getId_p(),
                     lista.get(num).getCidadeOrigem_p(),
                     lista.get(num).getCidadeDestino_p(),
@@ -278,7 +278,7 @@ private void listarValoresPassagem() {
                     lista.get(num).getVeiculo_p(),
                     lista.get(num).getPoltrona_p(),
                     lista.get(num).getValor_p()
-                            
+
                 });
 
             }
@@ -288,26 +288,20 @@ private void listarValoresPassagem() {
         }
     }
 
-    
-    private void ExcluirPassagem(){
+    private void ExcluirPassagem() {
         int id;
-        
+
         int setar;
         setar = tabelaPassagem.getSelectedRow();
-        
+
         id = Integer.parseInt(tabelaPassagem.getModel().getValueAt(setar, 0).toString());
-        
+
         PassagemDTO objpassagemdto = new PassagemDTO();
         objpassagemdto.setId_p(id);
-        
+
         PassagemDAO objpassagemdao = new PassagemDAO();
         objpassagemdao.excluirPassagem(objpassagemdto);
-        
-        
 
-}
-
-
-
+    }
 
 }

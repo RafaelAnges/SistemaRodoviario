@@ -238,7 +238,7 @@ public class Faturas extends javax.swing.JFrame {
         //     listarPassagem();
         data();
         listarValoresFaturas();
-       
+
 
     }//GEN-LAST:event_btnConsultarActionPerformed
 
@@ -255,10 +255,10 @@ public class Faturas extends javax.swing.JFrame {
     }//GEN-LAST:event_formInicioActionPerformed
 
     private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
-        
+
         ExcluirData();
         Limpar();
-        
+
     }//GEN-LAST:event_btnLimparActionPerformed
 
     /**
@@ -361,8 +361,8 @@ public class Faturas extends javax.swing.JFrame {
         faturasDAO.excluirFaturas(faturasDTO);
 
     }
-    
-    private void Limpar(){
+
+    private void Limpar() {
         formInicio.setText("");
         formFim.setText("");
     }
