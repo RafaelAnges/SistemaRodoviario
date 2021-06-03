@@ -7,7 +7,9 @@ package DAO;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import javax.swing.JOptionPane;
 
 /**
@@ -15,6 +17,12 @@ import javax.swing.JOptionPane;
  * @author rafae
  */
 public class ConexaoDAO {
+
+    static void closeConnection(Connection conn, ResultSet rs) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    
     public Connection conectaBD(){
         Connection conn = null;
         
@@ -27,5 +35,27 @@ public class ConexaoDAO {
     }
         return conn;
     }
+    
+    public static void closeConnection(Connection conn,
+            Statement stmt, ResultSet rs) throws Exception {
+        close(conn, stmt, rs);
+    }
+    
+    public static void closeConnection(Connection conn, Statement stmt)     throws Exception {
+        close(conn, stmt, null);
+    }
+    public static void closeConnection(Connection conn)    throws Exception {
+        close(conn, null, null);
+    }
+    
+    private static void close(Connection conn,Statement stmt, ResultSet rs)   throws Exception {
+        try {
+            if (rs != null) rs.close( );
+            if (stmt != null)stmt.close( );
+            if (conn != null)conn.close( );
+        } catch (Exception e) {
+            throw new Exception(e.getMessage( ));
+        }
+}
     
 }
