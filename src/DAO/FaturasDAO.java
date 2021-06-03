@@ -5,6 +5,7 @@
  */
 package DAO;
 
+import DTO.FaturasDTO;
 import DTO.PassagemDTO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -24,35 +25,86 @@ import javax.swing.JOptionPane;
 public class FaturasDAO {
     
     Connection conn;
+     PreparedStatement pstm;
+    ResultSet rs;
+    ArrayList<FaturasDTO> lista = new ArrayList<>();
     
-   public Vector data(String dataInicio, String dataFim) throws Exception{
-       conn = new ConexaoDAO().conectaBD();
-       Vector tb = new Vector();
-       String sql = "select * from passagem where dataSaida_p >= dataInico and dataSaida_p <= dataFim";
-       PreparedStatement ps = conn.prepareStatement(sql);
-       ResultSet rs = ps.executeQuery();
-       while(rs.next()){
-           Vector n1 = new Vector();
-           n1.add(rs.getDate("dataSaida_p"));
-           n1.add(rs.getInt("valor_p"));
-           tb.add(n1);
-           
+    public void Faturas(FaturasDTO faturasDTO){
+        String sql = "insert into datas (dataInicio, dataFim) value (?,?)";
        
-   }
-             
-            return tb; 
-         
-           
-    
+         conn = new ConexaoDAO().conectaBD();
         
+        try {
+            
+            pstm = conn.prepareStatement(sql);
+            pstm.setString(1, faturasDTO.getDataInicio());
+            pstm.setString(2, faturasDTO.getDataFim());
+            
+            pstm.execute();
+            pstm.close();
+            
+        } catch (SQLException erro) {
+            JOptionPane.showMessageDialog(null, "DATAINICIOEFIM "+ erro);
+        }
+        
+    }
+    private Statement st;
     
-     
-   }
+    public ArrayList<FaturasDTO> AtualizarFaturas() {
+        String sql = "select P.dataSaida_p, P.valor_p from passagem P join datas D  where P.dataSaida_p  BETWEEN D.dataInicio and D.dataFim ORDER by P.dataSaida_p";
 
-    public Vector data(JFormattedTextField formInicio, JFormattedTextField formFim) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        conn = new ConexaoDAO().conectaBD();
+        
+        try {
+
+            pstm = conn.prepareStatement(sql);
+            rs = pstm.executeQuery();
+
+            while (rs.next()) {
+                FaturasDTO faturasDTO = new FaturasDTO();
+                faturasDTO.setDataSaida_p(rs.getString("P.dataSaida_p"));
+                faturasDTO.setValor_p(rs.getInt("P.valor_p"));
+                
+
+                lista.add(faturasDTO);
+
+            }
+
+        } catch (SQLException erro) {
+            JOptionPane.showMessageDialog(null, "FaturasDAO Atualizar:" + erro);
+        }
+        return lista;
+        
+        
+        
     }
     
+    public void excluirFaturas(FaturasDTO faturasDTO){
+        String sql = "delete from datas where dataInicio = ? and dataFim = ?";
+        
+        conn = new ConexaoDAO().conectaBD();
+        
+        try {
+
+            pstm = conn.prepareStatement(sql);
+            pstm.setString(1, faturasDTO.getDataInicio());
+            pstm.setString(2, faturasDTO.getDataFim());
+
+            pstm.execute();
+            pstm.close();
+
+        } catch (SQLException erro) {
+            JOptionPane.showMessageDialog(null, "Faturas Excluir" + erro);
+        }
+        
+    }
+    
+   
+    
+     
+   
+
+  
     
     
 }
