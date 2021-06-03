@@ -9,8 +9,10 @@ import DAO.FaturasDAO;
 import DAO.PassagemDAO;
 import DTO.FaturasDTO;
 import DTO.PassagemDTO;
+import static com.sun.org.apache.xalan.internal.xsltc.compiler.util.Type.String;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Vector;
 import java.util.logging.Level;
@@ -237,8 +239,8 @@ public class Faturas extends javax.swing.JFrame {
     private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
         //     listarPassagem();
         data();
-        listarValoresFaturas();
-
+        
+       
 
     }//GEN-LAST:event_btnConsultarActionPerformed
 
@@ -255,10 +257,10 @@ public class Faturas extends javax.swing.JFrame {
     }//GEN-LAST:event_formInicioActionPerformed
 
     private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
-
-        ExcluirData();
-        Limpar();
-
+        
+      // ExcluirData();
+        //Limpar();
+        
     }//GEN-LAST:event_btnLimparActionPerformed
 
     /**
@@ -311,19 +313,28 @@ public class Faturas extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     public void data() {
-        String dataInicio, dataFim;
+        
+            String dataInicio, dataFim;
 
         dataInicio = formInicio.getText();
         dataFim = formFim.getText();
+        
+        FaturasDTO faturas = new FaturasDTO();
+        faturas.setDataInicio(dataInicio);
+        faturas.setDataFim(dataFim);
+        
 
-        FaturasDTO faturasDTO = new FaturasDTO();
-        faturasDTO.setDataInicio(dataInicio);
-        faturasDTO.setDataFim(dataFim);
+        
+        
 
-        FaturasDAO faturasDAO = new FaturasDAO();
-        faturasDAO.Faturas(faturasDTO);
+        
+        
     }
-
+  
+  
+    
+    
+/*
     private void listarValoresFaturas() {
         try {
 
@@ -361,10 +372,11 @@ public class Faturas extends javax.swing.JFrame {
         faturasDAO.excluirFaturas(faturasDTO);
 
     }
-
-    private void Limpar() {
+    
+    private void Limpar(){
         formInicio.setText("");
         formFim.setText("");
     }
+*/
 
 }

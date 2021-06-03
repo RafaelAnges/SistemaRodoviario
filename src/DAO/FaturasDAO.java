@@ -5,8 +5,10 @@
  */
 package DAO;
 
+import java.sql.Date;
 import DTO.FaturasDTO;
 import DTO.PassagemDTO;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -23,11 +25,29 @@ import javax.swing.JOptionPane;
  * @author rafae
  */
 public class FaturasDAO {
-    
+
     Connection conn;
-     PreparedStatement pstm;
+    PreparedStatement pstm;
     ResultSet rs;
     ArrayList<FaturasDTO> lista = new ArrayList<>();
+
+    public ResultSet datas(String dataInicio, String dataFim)throws Exception {
+        try{
+        PreparedStatement ps = conn.prepareStatement("select P.dataSaida_p, P.valor_p from passagem P join datas D  where P.dataSaida_p  BETWEEN ? and ? ORDER by P.dataSaida_p");
+        ps.setString(1, dataInicio);
+        ps.setString(2, dataFim);
+        ResultSet rs = ps.executeQuery();
+        
+        } catch (SQLException sqle) {
+            throw new Exception("Erro ao excluir dados:" + sqle);
+        } finally {
+            ConexaoDAO.closeConnection(conn,rs);
+        }
+        return null;
+
+    }
+
+    /*
     
     public void Faturas(FaturasDTO faturasDTO){
         String sql = "insert into datas (dataInicio, dataFim) value (?,?)";
@@ -99,12 +119,5 @@ public class FaturasDAO {
         
     }
     
-   
-    
-     
-   
-
-  
-    
-    
+     */
 }
