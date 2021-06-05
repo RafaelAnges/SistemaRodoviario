@@ -31,23 +31,7 @@ public class FaturasDAO {
     ResultSet rs;
     ArrayList<FaturasDTO> lista = new ArrayList<>();
 
-    public ResultSet datas(String dataInicio, String dataFim)throws Exception {
-        try{
-        PreparedStatement ps = conn.prepareStatement("select P.dataSaida_p, P.valor_p from passagem P join datas D  where P.dataSaida_p  BETWEEN ? and ? ORDER by P.dataSaida_p");
-        ps.setString(1, dataInicio);
-        ps.setString(2, dataFim);
-        ResultSet rs = ps.executeQuery();
-        
-        } catch (SQLException sqle) {
-            throw new Exception("Erro ao excluir dados:" + sqle);
-        } finally {
-            ConexaoDAO.closeConnection(conn,rs);
-        }
-        return null;
-
-    }
-
-    /*
+    
     
     public void Faturas(FaturasDTO faturasDTO){
         String sql = "insert into datas (dataInicio, dataFim) value (?,?)";
@@ -119,5 +103,5 @@ public class FaturasDAO {
         
     }
     
-     */
+     
 }

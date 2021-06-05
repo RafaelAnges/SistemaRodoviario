@@ -331,10 +331,11 @@ public class Faturas extends javax.swing.JFrame {
         
     }
   
+ 
   
     
     
-/*
+
     private void listarValoresFaturas() {
         try {
 
@@ -377,6 +378,6 @@ public class Faturas extends javax.swing.JFrame {
         formInicio.setText("");
         formFim.setText("");
     }
-*/
+
 
 }
