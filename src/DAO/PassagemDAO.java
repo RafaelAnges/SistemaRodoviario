@@ -104,29 +104,38 @@ public class PassagemDAO {
         }
     }
     
-      public ResultSet sePoltrona() {
-
-        conn = new ConexaoDAO().conectaBD();
-        String sql = "SELECT * FROM passagem WHERE veiculo_p = veiculo_p and poltrona_p = poltrona_p ";
-
-        try {
-
-            pstm = conn.prepareStatement(sql);
-            return pstm.executeQuery();
-
-        } catch (SQLException erro) {
-            JOptionPane.showMessageDialog(null, "SE poltronnnnnnnnnnnna" + erro);
-            return null;
-        }
-
-    }  
+       
  
     
+      
+      public ResultSet comparar(){
+          conn = new ConexaoDAO().conectaBD();
+          String sql = "select cidadeDestino_p, poltrona_p from passagem";
+          
+          try {
+              
+              pstm = conn.prepareStatement(sql);
+                  return pstm.executeQuery();
+
+        } catch (SQLException erro) {
+            JOptionPane.showMessageDialog(null, "compararaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" + erro);
+            return null;
+        }
+          
+      }
     
     
     
     
     
+      
+      
+      
+      
+      
+      
+      
+      
       
       
       
@@ -198,5 +207,8 @@ while(rs.next()){
         return lista1;
 
     }
+    
+    
+    
 
 }

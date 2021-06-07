@@ -33,7 +33,7 @@ public class FaturasDAO {
 
     
     
-    public void Faturas(FaturasDTO faturasDTO){
+    public void Faturas(FaturasDTO faturas){
         String sql = "insert into datas (dataInicio, dataFim) value (?,?)";
        
          conn = new ConexaoDAO().conectaBD();
@@ -41,8 +41,8 @@ public class FaturasDAO {
         try {
             
             pstm = conn.prepareStatement(sql);
-            pstm.setString(1, faturasDTO.getDataInicio());
-            pstm.setString(2, faturasDTO.getDataFim());
+            pstm.setString(1, faturas.getDataInicio());
+            pstm.setString(2, faturas.getDataFim());
             
             pstm.execute();
             pstm.close();

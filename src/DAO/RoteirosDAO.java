@@ -108,5 +108,23 @@ public class RoteirosDAO {
         }
 
     }
+    
+    public void excluirRoteiros(RoteirosDTO roteirosdto) {
+        String sql = "delete from roteiros where cidadeDestino_r = ?";
+
+        conn = new ConexaoDAO().conectaBD();
+
+        try {
+
+            pstm = conn.prepareStatement(sql);
+            pstm.setString(1, roteirosdto.getCidadeDestino_r());
+
+            pstm.execute();
+            pstm.close();
+
+        } catch (SQLException erro) {
+            JOptionPane.showMessageDialog(null, "roteirosDAO3 Excluir" + erro);
+        }
+    }
 
 }

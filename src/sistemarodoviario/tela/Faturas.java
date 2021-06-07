@@ -29,14 +29,9 @@ public class Faturas extends javax.swing.JFrame {
     /**
      * Creates new form faturas
      */
-    FaturasDAO DAO;
-
     public Faturas() {
         initComponents();
-        try {
-            DAO = new FaturasDAO();
-        } catch (Exception e) {
-        }
+
         setLocationRelativeTo(this);
     }
 
@@ -239,8 +234,8 @@ public class Faturas extends javax.swing.JFrame {
     private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
         //     listarPassagem();
         data();
-        
-       
+        listarValoresFaturas();
+
 
     }//GEN-LAST:event_btnConsultarActionPerformed
 
@@ -257,10 +252,10 @@ public class Faturas extends javax.swing.JFrame {
     }//GEN-LAST:event_formInicioActionPerformed
 
     private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
-        
-      // ExcluirData();
-        //Limpar();
-        
+
+        ExcluirData();
+        Limpar();
+
     }//GEN-LAST:event_btnLimparActionPerformed
 
     /**
@@ -313,28 +308,21 @@ public class Faturas extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     public void data() {
-        
-            String dataInicio, dataFim;
+
+        String dataInicio, dataFim;
 
         dataInicio = formInicio.getText();
         dataFim = formFim.getText();
-        
+
         FaturasDTO faturas = new FaturasDTO();
         faturas.setDataInicio(dataInicio);
         faturas.setDataFim(dataFim);
-        
 
-        
-        
-
-        
-        
+        FaturasDAO faturasDAO = new FaturasDAO();
+        faturasDAO.Faturas(faturas);
+                
+         
     }
-  
- 
-  
-    
-    
 
     private void listarValoresFaturas() {
         try {
@@ -373,11 +361,10 @@ public class Faturas extends javax.swing.JFrame {
         faturasDAO.excluirFaturas(faturasDTO);
 
     }
-    
-    private void Limpar(){
+
+    private void Limpar() {
         formInicio.setText("");
         formFim.setText("");
     }
-
 
 }
