@@ -54,8 +54,6 @@ public class usuario extends javax.swing.JFrame {
         tabelaUsuario = new javax.swing.JTable();
         btnConsultar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        txtExcluir = new javax.swing.JTextField();
-        btnCarregarCampo = new javax.swing.JButton();
         btCadastrar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -99,14 +97,6 @@ public class usuario extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel1.setText("TABELA DE CONSULTAR");
 
-        btnCarregarCampo.setBackground(new java.awt.Color(0, 204, 0));
-        btnCarregarCampo.setText("Carregar Campo");
-        btnCarregarCampo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCarregarCampoActionPerformed(evt);
-            }
-        });
-
         btCadastrar.setBackground(new java.awt.Color(0, 204, 0));
         btCadastrar.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         btCadastrar.setText("Cadastrar");
@@ -121,8 +111,6 @@ public class usuario extends javax.swing.JFrame {
         jLayeredPane1.setLayer(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane1.setLayer(btnConsultar, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane1.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(txtExcluir, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(btnCarregarCampo, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane1.setLayer(btCadastrar, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jLayeredPane1Layout = new javax.swing.GroupLayout(jLayeredPane1);
@@ -130,30 +118,27 @@ public class usuario extends javax.swing.JFrame {
         jLayeredPane1Layout.setHorizontalGroup(
             jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jLayeredPane1Layout.createSequentialGroup()
-                .addGap(8, 8, 8)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 527, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jLayeredPane1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnCarregarCampo)
-                .addGap(22, 22, 22))
-            .addGroup(jLayeredPane1Layout.createSequentialGroup()
                 .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jLayeredPane1Layout.createSequentialGroup()
+                        .addGap(8, 8, 8)
+                        .addComponent(jScrollPane1))
                     .addGroup(jLayeredPane1Layout.createSequentialGroup()
                         .addGap(59, 59, 59)
                         .addComponent(btCadastrar)
-                        .addGap(32, 32, 32)
                         .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jLayeredPane1Layout.createSequentialGroup()
+                                .addGap(32, 32, 32)
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jLayeredPane1Layout.createSequentialGroup()
+                                .addGap(44, 44, 44)
                                 .addComponent(btnConsultar)
-                                .addGap(116, 116, 116)
-                                .addComponent(txtExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(jLayeredPane1Layout.createSequentialGroup()
-                        .addGap(139, 139, 139)
-                        .addComponent(jLabel5)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(63, 63, 63)))
+                .addContainerGap())
+            .addGroup(jLayeredPane1Layout.createSequentialGroup()
+                .addGap(203, 203, 203)
+                .addComponent(jLabel5)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jLayeredPane1Layout.setVerticalGroup(
@@ -165,15 +150,12 @@ public class usuario extends javax.swing.JFrame {
                 .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnConsultar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(30, 30, 30)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(46, 46, 46)
-                .addComponent(btnCarregarCampo)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 261, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -182,15 +164,15 @@ public class usuario extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(21, 21, 21)
-                .addComponent(jLayeredPane1)
-                .addGap(30, 30, 30))
+                .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(22, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(19, 19, 19)
                 .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(44, Short.MAX_VALUE))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
         pack();
@@ -209,7 +191,7 @@ public class usuario extends javax.swing.JFrame {
 
         ExcluirUsuario();
         listarValoresUsuario();
-        LimparCampo();
+        
 
     }//GEN-LAST:event_btnExcluirActionPerformed
 
@@ -218,12 +200,6 @@ public class usuario extends javax.swing.JFrame {
         listarValoresUsuario();
 
     }//GEN-LAST:event_btnConsultarActionPerformed
-
-    private void btnCarregarCampoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCarregarCampoActionPerformed
-
-        CarregarCampo();
-
-    }//GEN-LAST:event_btnCarregarCampoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -262,7 +238,6 @@ public class usuario extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btCadastrar;
-    private javax.swing.JButton btnCarregarCampo;
     private javax.swing.JButton btnConsultar;
     private javax.swing.JButton btnExcluir;
     private javax.swing.JLabel jLabel1;
@@ -270,7 +245,6 @@ public class usuario extends javax.swing.JFrame {
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tabelaUsuario;
-    private javax.swing.JTextField txtExcluir;
     // End of variables declaration//GEN-END:variables
 
     private void listarValoresUsuario() {
@@ -299,23 +273,13 @@ public class usuario extends javax.swing.JFrame {
         }
     }
     
-    public void CarregarCampo(){
-        int setar = tabelaUsuario.getSelectedRow();
-        
-        
-        txtExcluir.setText(tabelaUsuario.getModel().getValueAt(setar, 0).toString());
-    }
-    
-    private void LimparCampo(){
-        txtExcluir.setText("");
-        
-    }
+
  
     
     private void ExcluirUsuario(){
         String login_u;
-        
-        login_u = txtExcluir.getText();
+        int setar = tabelaUsuario.getSelectedRow();
+        login_u = tabelaUsuario.getModel().getValueAt(setar, 0).toString();
         
         UsuarioDTO objusuariodto = new UsuarioDTO();
         objusuariodto.setLogin_u(login_u);

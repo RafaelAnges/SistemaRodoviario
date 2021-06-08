@@ -63,7 +63,6 @@ public class cadastrarCidades extends javax.swing.JFrame {
 
         jLabel2.setText("*ID:");
 
-        txtId.setEditable(false);
         txtId.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtIdActionPerformed(evt);
@@ -173,12 +172,12 @@ public class cadastrarCidades extends javax.swing.JFrame {
         String uf,cidade;
         int id;
         
-        //id = Integer.parseInt(txtId.getText());
+        id = Integer.parseInt(txtId.getText());
         uf = txtUf.getText();
         cidade = txtCidade.getText();
         
         CidadeDTO objcidadedto = new CidadeDTO();
-       // objcidadedto.setId_c(id);
+        objcidadedto.setId_c(id);
         objcidadedto.setUf_c(uf);
         objcidadedto.setCidade_c(cidade);
         

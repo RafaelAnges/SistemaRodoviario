@@ -26,7 +26,7 @@ public class cadastrarPassagens extends javax.swing.JFrame {
      */
     public cadastrarPassagens() {
         initComponents();
-        
+
         comboDestino();
         setLocationRelativeTo(this);
     }
@@ -282,8 +282,30 @@ public class cadastrarPassagens extends javax.swing.JFrame {
     }//GEN-LAST:event_comOrigemActionPerformed
 
     private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
-        confirmar();
+       /* try {
 
+            PassagemDAO pas = new PassagemDAO();
+            ResultSet rs = pas.comparar();
+
+            while (rs.next()) {
+
+                if (comDestino.getSelectedItem().equals(rs.getString(1)) && comPoltrona.getSelectedItem().equals(rs.getString(2))) {
+                    JOptionPane.showMessageDialog(null, "Passagem já foi Vendida");
+                    break;
+
+                } else {
+
+                    confirmar();
+
+                }
+            }
+
+        } catch (SQLException erro) {
+            JOptionPane.showMessageDialog(null, "seeeeeeee pollllllllllllllllltrona" + erro);
+
+        }
+        */
+        confirmar();
         dispose();
 
 
@@ -309,14 +331,16 @@ public class cadastrarPassagens extends javax.swing.JFrame {
                 if (comDestino.getSelectedItem().equals(rs.getString(1))) {
                     comVeiculo.removeAllItems();
                     comVeiculo.addItem(rs.getString(2));
-                }if(comDestino.getSelectedItem().equals(rs.getString(1))){
+                }
+                if (comDestino.getSelectedItem().equals(rs.getString(1))) {
                     comPoltrona.removeAllItems();
-                    
+
                     for (int i = 1; i <= rs.getInt(3); i++) {
 
-                    comPoltrona.addItem(Integer.toString(i));
+                        comPoltrona.addItem(Integer.toString(i));
 
-                }}
+                    }
+                }
 
             }
 
@@ -407,7 +431,6 @@ public class cadastrarPassagens extends javax.swing.JFrame {
         }
     }
 
- 
     public void confirmar() {
 
         String cidadeOrigem, cidadeDestino, dataSaida, horaSaida, veiculo;
@@ -417,50 +440,7 @@ public class cadastrarPassagens extends javax.swing.JFrame {
         // restaurarDadosComboVeiculo();
         // restaurarDadosComboCidade();
         //NAO ESTA FUNCIONANDO
-        /*
-        try {
-
-            PassagemDAO pas = new PassagemDAO();
-            ResultSet rs = pas.comparar();
-
-            while(rs.next()){
-
-                if (comDestino.getSelectedItem().equals(rs.getString(1)) && comPoltrona.getSelectedItem().equals(rs.getString(2))) {
-                    JOptionPane.showMessageDialog(null, "Passagem já foi Vendida");
-                    break;
-                } else {
-                    
-                    id = Integer.parseInt(txtId.getText());
-                    cidadeOrigem = comOrigem.getSelectedItem().toString();
-                    cidadeDestino = comDestino.getSelectedItem().toString();
-                    dataSaida = formData.getText();
-                    horaSaida = formHora.getText();
-                    veiculo = comVeiculo.getSelectedItem().toString();
-                    poltrona = Integer.parseInt(comPoltrona.getSelectedItem().toString());
-                    valor = txtValor.getText().toString();
-
-                    PassagemDTO objpassagemdto = new PassagemDTO();
-                    objpassagemdto.setId_p(id);
-                    objpassagemdto.setCidadeOrigem_p(cidadeOrigem);
-                    objpassagemdto.setCidadeDestino_p(cidadeDestino);
-                    objpassagemdto.setDataSaida_p(dataSaida);
-                    objpassagemdto.setHoraSaida_p(horaSaida);
-                    objpassagemdto.setVeiculo_p(veiculo);
-                    objpassagemdto.setPoltrona_p(poltrona);
-                    objpassagemdto.setValor_p(valor);
-
-                    PassagemDAO objpassagemdao = new PassagemDAO();
-                    objpassagemdao.cadastrarPassagem(objpassagemdto);
-                
-                }
-            }
-
-        } catch (SQLException erro) {
-            JOptionPane.showMessageDialog(null, "seeeeeeee pollllllllllllllllltrona" + erro);
-
-        }
-
-        */ id = Integer.parseInt(txtId.getText());
+        id = Integer.parseInt(txtId.getText());
         cidadeOrigem = comOrigem.getSelectedItem().toString();
         cidadeDestino = comDestino.getSelectedItem().toString();
         dataSaida = formData.getText();
@@ -469,7 +449,6 @@ public class cadastrarPassagens extends javax.swing.JFrame {
         poltrona = Integer.parseInt(comPoltrona.getSelectedItem().toString());
         valor = txtValor.getText().toString();
 
-     
         PassagemDTO objpassagemdto = new PassagemDTO();
         objpassagemdto.setId_p(id);
         objpassagemdto.setCidadeOrigem_p(cidadeOrigem);
@@ -481,9 +460,8 @@ public class cadastrarPassagens extends javax.swing.JFrame {
         objpassagemdto.setValor_p(valor);
 
         PassagemDAO objpassagemdao = new PassagemDAO();
-        objpassagemdao.cadastrarPassagem(objpassagemdto);  
-        
-         
+        objpassagemdao.cadastrarPassagem(objpassagemdto);
+
     }
 
 }
