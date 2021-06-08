@@ -48,21 +48,7 @@ public class RoteirosDAO {
 
     }
 
-    public ResultSet listaCidade() {
-
-        conn = new ConexaoDAO().conectaBD();
-        String sql = "select cidadeDestino_r, veiculo_r, poltrona_r from roteiros";
-
-        try {
-
-            pstm = conn.prepareStatement(sql);
-            return pstm.executeQuery();
-
-        } catch (SQLException erro) {
-            JOptionPane.showMessageDialog(null, "listaCidade" + erro);
-            return null;
-        }
-    }
+   
 
     public ArrayList<PassagemDTO> AtualizarRoteiros() {
         String sql = "SELECT P.cidadeDestino_P, P.veiculo_p, count(P.cidadeDestino_p),(R.poltrona_r - count(P.cidadeDestino_p)) from passagem P join roteiros R on P.cidadeDestino_p = R.cidadeDestino_r  GROUP by P.cidadeDestino_p, R.poltrona_r  ";
@@ -92,22 +78,7 @@ public class RoteirosDAO {
 
     }
 
-    public ResultSet comboCidade() {
-
-        conn = new ConexaoDAO().conectaBD();
-        String sql = "SELECT cidadeDestino_r, veiculo_r from roteiros ";
-
-        try {
-
-            pstm = conn.prepareStatement(sql);
-            return pstm.executeQuery();
-
-        } catch (SQLException erro) {
-            JOptionPane.showMessageDialog(null, "comboCidade222" + erro);
-            return null;
-        }
-
-    }
+    
     
     public void excluirRoteiros(RoteirosDTO roteirosdto) {
         String sql = "delete from roteiros where cidadeDestino_r = ?";
@@ -124,6 +95,26 @@ public class RoteirosDAO {
 
         } catch (SQLException erro) {
             JOptionPane.showMessageDialog(null, "roteirosDAO3 Excluir" + erro);
+        }
+    }
+    
+    
+    
+    
+    
+    public ResultSet listaCidade2() {
+
+        conn = new ConexaoDAO().conectaBD();
+        String sql = "select C.cidade_c, C.id_c, V.modelo_v, V.poltrona_v from cidade C join veiculo V on C.id_c = V.numero_v";
+
+        try {
+
+            pstm = conn.prepareStatement(sql);
+            return pstm.executeQuery();
+
+        } catch (SQLException erro) {
+            JOptionPane.showMessageDialog(null, "listaCidade" + erro);
+            return null;
         }
     }
 

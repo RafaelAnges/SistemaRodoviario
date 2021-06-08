@@ -104,6 +104,22 @@ public class PassagemDAO {
         }
     }
     
+    public ResultSet comboCidade2(){
+        
+    conn = new ConexaoDAO().conectaBD();
+        String sql = "select C.cidade_c, V.modelo_v, V.poltrona_v from cidade C join veiculo V on C.id_c = V.numero_v";
+
+        try {
+
+            pstm = conn.prepareStatement(sql);
+            return pstm.executeQuery();
+
+        } catch (SQLException erro) {
+            JOptionPane.showMessageDialog(null, "listaCidade" + erro);
+            return null;
+        }
+    }
+    
        
  
     

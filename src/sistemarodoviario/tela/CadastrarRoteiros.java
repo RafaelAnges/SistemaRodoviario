@@ -7,6 +7,9 @@ package sistemarodoviario.tela;
 
 import DAO.RoteirosDAO;
 import DTO.RoteirosDTO;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -19,7 +22,7 @@ public class CadastrarRoteiros extends javax.swing.JFrame {
      */
     public CadastrarRoteiros() {
         initComponents();
-        
+        ComboCidade();
         
         
         setLocationRelativeTo(this);
@@ -49,12 +52,12 @@ public class CadastrarRoteiros extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        txtDestino = new javax.swing.JTextField();
-        txtVeiculo = new javax.swing.JTextField();
-        txtPoltrona = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        txtCodCidade = new javax.swing.JTextField();
+        comCidade = new javax.swing.JComboBox<>();
+        comVeiculo = new javax.swing.JComboBox<>();
+        comCod = new javax.swing.JComboBox<>();
+        comPoltrona = new javax.swing.JComboBox<>();
         btnConfirmar = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
 
@@ -72,25 +75,31 @@ public class CadastrarRoteiros extends javax.swing.JFrame {
 
         jLabel4.setText("*CODCIDADE");
 
+        comCidade.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                comCidadeItemStateChanged(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(45, 45, 45)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(txtPoltrona)
-                        .addComponent(txtDestino, javax.swing.GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE))
                     .addComponent(jLabel3)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(comPoltrona, javax.swing.GroupLayout.Alignment.LEADING, 0, 102, Short.MAX_VALUE)
+                        .addComponent(comCidade, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtVeiculo, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
                     .addComponent(jLabel4)
-                    .addComponent(txtCodCidade))
-                .addGap(80, 80, 80))
+                    .addComponent(comVeiculo, 0, 100, Short.MAX_VALUE)
+                    .addComponent(comCod, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(121, 121, 121))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -99,18 +108,18 @@ public class CadastrarRoteiros extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtDestino, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtVeiculo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                    .addComponent(comCidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(comVeiculo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(23, 23, 23)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtPoltrona, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtCodCidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(comCod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(comPoltrona, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(41, Short.MAX_VALUE))
         );
 
@@ -166,10 +175,10 @@ public class CadastrarRoteiros extends javax.swing.JFrame {
         String destino, veiculo;
         int poltrona, codCidade;
         
-        codCidade = Integer.parseInt(txtCodCidade.getText());
-        destino = txtDestino.getText();
-        veiculo = txtVeiculo.getText();
-        poltrona = Integer.parseInt(txtPoltrona.getText());
+        codCidade = Integer.parseInt(comCod.getSelectedItem().toString());
+        destino = comCidade.getSelectedItem().toString();
+        veiculo = comVeiculo.getSelectedItem().toString();
+        poltrona = Integer.parseInt(comPoltrona.getSelectedItem().toString());
         
         RoteirosDTO objroteirosdto = new RoteirosDTO();
         objroteirosdto.setCidadeDestino_r(destino);
@@ -187,6 +196,34 @@ public class CadastrarRoteiros extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void comCidadeItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comCidadeItemStateChanged
+        try {
+
+            RoteirosDAO roteirosdao = new RoteirosDAO();
+            ResultSet rs = roteirosdao.listaCidade2();
+
+            while (rs.next()) {
+
+                if (comCidade.getSelectedItem().equals(rs.getString(1))) {
+                    comCod.removeAllItems();
+                    comCod.addItem(rs.getString(2));
+
+                }if(comCidade.getSelectedItem().equals(rs.getString(1))){
+                    comVeiculo.removeAllItems();
+                    comVeiculo.addItem(rs.getString(3));
+                }if(comCidade.getSelectedItem().equals(rs.getString(1))){
+                    comPoltrona.removeAllItems();
+                    comPoltrona.addItem(rs.getString(4));
+                }
+
+            }
+
+        } catch (SQLException erro) {
+            JOptionPane.showMessageDialog(null, "combocidadeooooooooooooooooooooooooo" + erro);
+
+        }
+    }//GEN-LAST:event_comCidadeItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -225,15 +262,42 @@ public class CadastrarRoteiros extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnConfirmar;
+    private javax.swing.JComboBox<String> comCidade;
+    private javax.swing.JComboBox<String> comCod;
+    private javax.swing.JComboBox<String> comPoltrona;
+    private javax.swing.JComboBox<String> comVeiculo;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField txtCodCidade;
-    private javax.swing.JTextField txtDestino;
-    private javax.swing.JTextField txtPoltrona;
-    private javax.swing.JTextField txtVeiculo;
     // End of variables declaration//GEN-END:variables
+
+    public void ComboCidade(){
+        try {
+            
+        RoteirosDAO roteirosdao = new RoteirosDAO();
+            ResultSet rs = roteirosdao.listaCidade2();
+
+            while (rs.next()) {
+                comCidade.addItem(rs.getString(1));
+
+            }
+
+        } catch (SQLException erro) {
+            JOptionPane.showMessageDialog(null, "combodestino" + erro);
+
+        }
+    }
+
+
+
+
+
+
+
+
+
+
 }

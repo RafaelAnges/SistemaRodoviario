@@ -26,7 +26,7 @@ public class cadastrarPassagens extends javax.swing.JFrame {
      */
     public cadastrarPassagens() {
         initComponents();
-        restaurarDadosComboVeiculo();
+        
         comboDestino();
         setLocationRelativeTo(this);
     }
@@ -301,16 +301,22 @@ public class cadastrarPassagens extends javax.swing.JFrame {
 
         try {
 
-            RoteirosDAO roteirosdao = new RoteirosDAO();
-            ResultSet rs = roteirosdao.comboCidade();
+            PassagemDAO roteirosdao = new PassagemDAO();
+            ResultSet rs = roteirosdao.comboCidade2();
 
             while (rs.next()) {
 
                 if (comDestino.getSelectedItem().equals(rs.getString(1))) {
                     comVeiculo.removeAllItems();
                     comVeiculo.addItem(rs.getString(2));
+                }if(comDestino.getSelectedItem().equals(rs.getString(1))){
+                    comPoltrona.removeAllItems();
+                    
+                    for (int i = 1; i <= rs.getInt(3); i++) {
 
-                }
+                    comPoltrona.addItem(Integer.toString(i));
+
+                }}
 
             }
 
@@ -387,8 +393,8 @@ public class cadastrarPassagens extends javax.swing.JFrame {
     public void comboDestino() {
         try {
 
-            RoteirosDAO roteirosdao = new RoteirosDAO();
-            ResultSet rs = roteirosdao.comboCidade();
+            PassagemDAO roteirosdao = new PassagemDAO();
+            ResultSet rs = roteirosdao.comboCidade2();
 
             while (rs.next()) {
                 comDestino.addItem(rs.getString(1));
@@ -401,30 +407,7 @@ public class cadastrarPassagens extends javax.swing.JFrame {
         }
     }
 
-    public void restaurarDadosComboVeiculo() {
-
-        try {
-            String a;
-            RoteirosDAO objcidadedao = new RoteirosDAO();
-            ResultSet rs = objcidadedao.listaCidade();
-
-            while (rs.next()) {
-
-                comPoltrona.addItem(rs.getString(2));
-                for (int i = 1; i <= rs.getInt(3); i++) {
-
-                    comPoltrona.addItem(Integer.toString(i));
-
-                }
-
-            }
-
-        } catch (SQLException erro) {
-            JOptionPane.showMessageDialog(null, "restaurarDados Combo" + erro);
-
-        }
-    }
-
+ 
     public void confirmar() {
 
         String cidadeOrigem, cidadeDestino, dataSaida, horaSaida, veiculo;
