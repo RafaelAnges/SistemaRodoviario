@@ -7,7 +7,7 @@ package DTO;
 
 import static com.sun.org.apache.xalan.internal.xsltc.compiler.util.Type.Int;
 import java.sql.PreparedStatement;
-import static org.eclipse.persistence.platform.database.oracle.plsql.OraclePLSQLTypes.Int;
+
 
 /**
  *

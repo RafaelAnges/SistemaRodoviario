@@ -65,7 +65,7 @@ public class menu extends javax.swing.JFrame {
         jPanel1.setInheritsPopupMenu(true);
         jPanel1.setName(""); // NOI18N
 
-        btVeiculo.setBackground(new java.awt.Color(0, 204, 0));
+        btVeiculo.setBackground(new java.awt.Color(102, 204, 255));
         btVeiculo.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btVeiculo.setText("Veículo");
         btVeiculo.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -78,7 +78,7 @@ public class menu extends javax.swing.JFrame {
             }
         });
 
-        btFaturas.setBackground(new java.awt.Color(0, 204, 0));
+        btFaturas.setBackground(new java.awt.Color(102, 204, 255));
         btFaturas.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btFaturas.setText("Faturas");
         btFaturas.addActionListener(new java.awt.event.ActionListener() {
@@ -87,7 +87,7 @@ public class menu extends javax.swing.JFrame {
             }
         });
 
-        btRoteiros.setBackground(new java.awt.Color(0, 204, 0));
+        btRoteiros.setBackground(new java.awt.Color(102, 204, 255));
         btRoteiros.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btRoteiros.setText("Roteiros");
         btRoteiros.addActionListener(new java.awt.event.ActionListener() {
@@ -96,7 +96,7 @@ public class menu extends javax.swing.JFrame {
             }
         });
 
-        btUsuario.setBackground(new java.awt.Color(0, 204, 0));
+        btUsuario.setBackground(new java.awt.Color(102, 204, 255));
         btUsuario.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btUsuario.setText("Usuário");
         btUsuario.setFocusable(false);
@@ -110,7 +110,7 @@ public class menu extends javax.swing.JFrame {
 
         jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\rafae\\Downloads\\bus.jpg")); // NOI18N
 
-        btPassagens.setBackground(new java.awt.Color(0, 204, 0));
+        btPassagens.setBackground(new java.awt.Color(102, 204, 255));
         btPassagens.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btPassagens.setText("Passagens");
         btPassagens.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -120,7 +120,7 @@ public class menu extends javax.swing.JFrame {
             }
         });
 
-        btCidade2.setBackground(new java.awt.Color(0, 204, 0));
+        btCidade2.setBackground(new java.awt.Color(102, 204, 255));
         btCidade2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btCidade2.setText("Cidade");
         btCidade2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
