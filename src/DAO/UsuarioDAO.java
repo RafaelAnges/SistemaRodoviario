@@ -24,6 +24,7 @@ public class UsuarioDAO {
     PreparedStatement pstm;
     ResultSet rs;
     ArrayList<UsuarioDTO> lista = new ArrayList<>();
+    ArrayList<UsuarioDTO> lista1 = new ArrayList<>();
 
     public ResultSet autenticacaoUsuario(UsuarioDTO objusuariodto) {
         conn = new ConexaoDAO().conectaBD();
@@ -119,25 +120,60 @@ public class UsuarioDAO {
     }
     
     public void alterarUsuario(UsuarioDTO objusuariodto) {
-        String sql = "UPDATE `usuario` SET `login_u` = ?, `nome_u` = ?, `cargo_u`= ?, `senha_u` = ?, `email_u`= ? ";
+        String sql = "UPDATE usuario SET nome_u = ?, cargo_u= ?, senha_u = ?, email_u= ? where login_u = ?";
 
         conn = new ConexaoDAO().conectaBD();
 
         try {
 
             pstm = conn.prepareStatement(sql);
-            pstm.setString(1, objusuariodto.getLogin_u());
+            
             pstm.setString(1, objusuariodto.getNome_u());
-            pstm.setString(1, objusuariodto.getCargo_u());
-            pstm.setString(1, objusuariodto.getSenha_u());
-            pstm.setString(1, objusuariodto.getEmail_u());
+            pstm.setString(2, objusuariodto.getCargo_u());
+            pstm.setString(3, objusuariodto.getSenha_u());
+            pstm.setString(4, objusuariodto.getEmail_u());
+            pstm.setString(5, objusuariodto.getLogin_u());
 
             pstm.execute();
             pstm.close();
 
         } catch (SQLException erro) {
-            JOptionPane.showMessageDialog(null, "UsuarioDAO Excluir" + erro);
+            JOptionPane.showMessageDialog(null, "UsuarioDAO Alterar" + erro);
         }
 
 }
+    
+     public ArrayList<UsuarioDTO> AtualizarUsuario1() {
+        String sql = "select login_u, nome_u, cargo_u, senha_u, email_u from usuario";
+
+        conn = new ConexaoDAO().conectaBD();
+
+        try {
+
+            pstm = conn.prepareStatement(sql);
+            rs = pstm.executeQuery();
+
+            while (rs.next()) {
+                UsuarioDTO objusuarioDTO = new UsuarioDTO();
+                objusuarioDTO.setLogin_u(rs.getString("login_u"));
+                objusuarioDTO.setNome_u(rs.getString("nome_u"));
+                objusuarioDTO.setCargo_u(rs.getString("cargo_u"));
+                objusuarioDTO.setSenha_u(rs.getString("senha_u"));
+                objusuarioDTO.setEmail_u(rs.getString("email_u"));
+
+                lista1.add(objusuarioDTO);
+            }
+
+        } catch (SQLException erro) {
+            JOptionPane.showMessageDialog(null, "UsuarioDAO Atualizar:" + erro);
+        }
+        return lista1;
+
+    }
+     
+     
+     
+     
+     
+     
 }

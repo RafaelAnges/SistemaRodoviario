@@ -251,10 +251,10 @@ public class cidade extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
-         if (!alterarCidades.getInstancia().isVisible()) {
-            alterarCidades.getInstancia().setVisible(true);
+         if (!alterarCidade.getInstancia().isVisible()) {
+            alterarCidade.getInstancia().setVisible(true);
         } else {
-            alterarCidades.getInstancia().requestFocus();
+            alterarCidade.getInstancia().requestFocus();
         }
     }//GEN-LAST:event_btnAlterarActionPerformed
 

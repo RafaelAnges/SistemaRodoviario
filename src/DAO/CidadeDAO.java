@@ -94,6 +94,30 @@ public class CidadeDAO {
     }
     
     
+    public void alterarCidade(CidadeDTO cidadedto) {
+        String sql = "UPDATE cidade SET uf_c = ?, cidade_c = ? where id_c = ?";
+
+        conn = new ConexaoDAO().conectaBD();
+
+        try {
+
+            pstm = conn.prepareStatement(sql);
+            
+            pstm.setString(1, cidadedto.getUf_c());
+            pstm.setString(2, cidadedto.getCidade_c());
+            pstm.setInt(3, cidadedto.getId_c());
+            
+
+            pstm.execute();
+            pstm.close();
+
+        } catch (SQLException erro) {
+            JOptionPane.showMessageDialog(null, "cidadeDAO Alterar" + erro);
+        }
+        
+    }
+    
+    
   /* public ResultSet listaCidade(){
         conn = new ConexaoDAO().conectaBD();
         String sql = "select cidade_c from cidade";

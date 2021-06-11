@@ -5,6 +5,12 @@
  */
 package sistemarodoviario.tela;
 
+import DAO.CidadeDAO;
+import DTO.CidadeDTO;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author rafae
@@ -16,6 +22,20 @@ public class alterarCidade extends javax.swing.JFrame {
      */
     public alterarCidade() {
         initComponents();
+        listarValoresCidade();
+        setLocationRelativeTo(this);
+    }
+    
+    private static alterarCidade instancia = null;
+    /**
+     * Creates new form TelaCadAluno
+     */
+
+    public static alterarCidade getInstancia() {
+        if (instancia == null)
+            instancia = new alterarCidade();
+        
+        return instancia;
     }
 
     /**
@@ -39,9 +59,11 @@ public class alterarCidade extends javax.swing.JFrame {
         btnCancelar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelaCidade = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
+        btnCarregar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Alterar Cidade");
+        setAlwaysOnTop(true);
 
         jPanel1.setBackground(new java.awt.Color(0, 153, 204));
 
@@ -104,7 +126,7 @@ public class alterarCidade extends javax.swing.JFrame {
 
         btnAlterar.setBackground(new java.awt.Color(102, 204, 255));
         btnAlterar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        btnAlterar.setText("Confirmar");
+        btnAlterar.setText("Alterar");
         btnAlterar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAlterarActionPerformed(evt);
@@ -132,9 +154,14 @@ public class alterarCidade extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tabelaCidade);
 
-        jButton1.setBackground(new java.awt.Color(102, 204, 255));
-        jButton1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jButton1.setText("Carregar Campos");
+        btnCarregar.setBackground(new java.awt.Color(102, 204, 255));
+        btnCarregar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnCarregar.setText("Carregar Campos");
+        btnCarregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCarregarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -145,18 +172,16 @@ public class alterarCidade extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btnCancelar)
-                        .addGap(47, 47, 47)
+                        .addGap(112, 112, 112)
                         .addComponent(btnAlterar))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                        .addGap(25, 25, 25)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButton1)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 361, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(28, Short.MAX_VALUE))
+                            .addComponent(btnCarregar)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 361, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(37, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -164,21 +189,21 @@ public class alterarCidade extends javax.swing.JFrame {
                 .addGap(34, 34, 34)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
+                .addComponent(btnCarregar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -193,29 +218,21 @@ public class alterarCidade extends javax.swing.JFrame {
     }//GEN-LAST:event_txtIdActionPerformed
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
+AlterarCidade();
+limparCampo();
+listarValoresCidade();
 
-        String uf,cidade;
-        int id;
-
-        id = Integer.parseInt(txtId.getText());
-        uf = txtUf.getText();
-        cidade = txtCidade.getText();
-
-        CidadeDTO objcidadedto = new CidadeDTO();
-        objcidadedto.setId_c(id);
-        objcidadedto.setUf_c(uf);
-        objcidadedto.setCidade_c(cidade);
-
-        CidadeDAO objcidadedao = new CidadeDAO();
-        objcidadedao.cadastrarCidade(objcidadedto);
-
-        this.dispose();
+        
 
     }//GEN-LAST:event_btnAlterarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnCarregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCarregarActionPerformed
+        carregarCampos();
+    }//GEN-LAST:event_btnCarregarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -255,7 +272,7 @@ public class alterarCidade extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAlterar;
     private javax.swing.JButton btnCancelar;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnCarregar;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
@@ -267,4 +284,78 @@ public class alterarCidade extends javax.swing.JFrame {
     private javax.swing.JTextField txtId;
     private javax.swing.JTextField txtUf;
     // End of variables declaration//GEN-END:variables
+
+    private void listarValoresCidade() {
+        try {
+
+            CidadeDAO objcidadedao = new CidadeDAO();
+
+            DefaultTableModel model = (DefaultTableModel) tabelaCidade.getModel();
+            model.setNumRows(0);
+
+            ArrayList<CidadeDTO> lista = objcidadedao.AtualizarCidade();
+
+            for (int num = 0; num < lista.size(); num++) {
+                model.addRow(new Object[]{
+                    lista.get(num).getId_c(),
+                    lista.get(num).getUf_c(),
+                    lista.get(num).getCidade_c()
+
+                });
+
+            }
+
+        } catch (Exception erro) {
+            JOptionPane.showMessageDialog(null, "Listar Valores View:" + erro);
+        }
+    }
+    
+     public void carregarCampos() {
+        int setar = tabelaCidade.getSelectedRow();
+        txtId.setText(tabelaCidade.getModel().getValueAt(setar, 0).toString());
+        txtUf.setText(tabelaCidade.getModel().getValueAt(setar, 1).toString());
+        txtCidade.setText(tabelaCidade.getModel().getValueAt(setar, 2).toString());
+        
+
+    }
+    
+    public void limparCampo(){
+        txtId.setText("");
+        txtUf.setText("");
+        txtCidade.setText("");
+        
+        
+    }
+
+    private void AlterarCidade() {
+        String  uf, cidade;
+        int id;
+        id = Integer.parseInt(txtId.getText());
+        uf = txtUf.getText();
+        cidade = txtCidade.getText();
+       
+
+        CidadeDTO cidadedto = new CidadeDTO();
+        cidadedto.setId_c(id);
+        cidadedto.setUf_c(uf);
+        cidadedto.setCidade_c(cidade);
+        
+        
+        CidadeDAO cidadedao = new CidadeDAO();
+        cidadedao.alterarCidade(cidadedto);
+        
+        
+
+    }
+    
+    
+    
+
+
+
+
+
+
+
+
 }

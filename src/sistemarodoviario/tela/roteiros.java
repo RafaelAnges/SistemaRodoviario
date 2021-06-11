@@ -28,7 +28,7 @@ public class roteiros extends javax.swing.JFrame {
         initComponents();
         
         
-        
+        listaValoresRoteiros();
         setLocationRelativeTo(this);
     }
     

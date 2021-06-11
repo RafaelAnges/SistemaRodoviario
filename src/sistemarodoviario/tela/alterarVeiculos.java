@@ -5,6 +5,12 @@
  */
 package sistemarodoviario.tela;
 
+import DAO.VeiculoDAO;
+import DTO.VeiculoDTO;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author rafae
@@ -14,8 +20,22 @@ public class alterarVeiculos extends javax.swing.JFrame {
     /**
      * Creates new form alterarVeiculos
      */
-    public alterarVeiculos() {
+     public alterarVeiculos() {
         initComponents();
+        listarValoresVeiculo();
+        setLocationRelativeTo(this);
+    }
+    
+    private static alterarVeiculos instancia = null;
+    /**
+     * Creates new form TelaCadAluno
+     */
+
+    public static alterarVeiculos getInstancia() {
+        if (instancia == null)
+            instancia = new alterarVeiculos();
+        
+        return instancia;
     }
 
     /**
@@ -40,14 +60,16 @@ public class alterarVeiculos extends javax.swing.JFrame {
         txtMotorista = new javax.swing.JTextField();
         txtModelo = new javax.swing.JTextField();
         txtPoltrona = new javax.swing.JTextField();
-        formtext = new javax.swing.JFormattedTextField();
-        Alterar = new javax.swing.JButton();
+        txtData = new javax.swing.JTextField();
+        btnALterar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelaVeiculo = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
+        btnCarregar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Alterar Veiculo");
+        setAlwaysOnTop(true);
 
         jPanel1.setBackground(new java.awt.Color(0, 153, 204));
         jPanel1.setPreferredSize(new java.awt.Dimension(492, 500));
@@ -60,6 +82,7 @@ public class alterarVeiculos extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("*NÚMERO:");
 
+        txtNumero.setEditable(false);
         txtNumero.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtNumeroActionPerformed(evt);
@@ -92,12 +115,6 @@ public class alterarVeiculos extends javax.swing.JFrame {
             }
         });
 
-        try {
-            formtext.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("####/##/##")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -111,22 +128,22 @@ public class alterarVeiculos extends javax.swing.JFrame {
                     .addComponent(txtNumero))
                 .addGap(32, 32, 32)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel6)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
-                            .addComponent(txtPlaca, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(formtext, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel4)
-                                .addComponent(txtMotorista, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(19, 19, 19)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel7)
-                                    .addComponent(txtPoltrona, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                            .addComponent(txtPlaca, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(27, 27, 27)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4)
+                            .addComponent(txtMotorista, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(txtData)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(21, 21, 21)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel7)
+                            .addComponent(txtPoltrona, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(40, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -151,16 +168,16 @@ public class alterarVeiculos extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtModelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtPoltrona, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(formtext, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(57, Short.MAX_VALUE))
         );
 
-        Alterar.setBackground(new java.awt.Color(102, 204, 255));
-        Alterar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        Alterar.setText("Alterar");
-        Alterar.addActionListener(new java.awt.event.ActionListener() {
+        btnALterar.setBackground(new java.awt.Color(102, 204, 255));
+        btnALterar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnALterar.setText("Alterar");
+        btnALterar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                AlterarActionPerformed(evt);
+                btnALterarActionPerformed(evt);
             }
         });
 
@@ -193,9 +210,14 @@ public class alterarVeiculos extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tabelaVeiculo);
 
-        jButton1.setBackground(new java.awt.Color(102, 204, 255));
-        jButton1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jButton1.setText("Carregar Campos");
+        btnCarregar.setBackground(new java.awt.Color(102, 204, 255));
+        btnCarregar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnCarregar.setText("Carregar Campos");
+        btnCarregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCarregarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -205,14 +227,14 @@ public class alterarVeiculos extends javax.swing.JFrame {
                 .addGap(30, 30, 30)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 404, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1)
+                    .addComponent(btnCarregar)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addGroup(jPanel1Layout.createSequentialGroup()
                             .addComponent(btnCancelar)
                             .addGap(53, 53, 53)
-                            .addComponent(Alterar))
+                            .addComponent(btnALterar))
                         .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(51, Short.MAX_VALUE))
+                .addContainerGap(38, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -220,12 +242,12 @@ public class alterarVeiculos extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton1)
+                .addComponent(btnCarregar)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Alterar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnALterar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(226, 226, 226))
         );
@@ -234,7 +256,7 @@ public class alterarVeiculos extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 485, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 472, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -252,38 +274,20 @@ public class alterarVeiculos extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtPoltronaActionPerformed
 
-    private void AlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AlterarActionPerformed
-        // TODO add your handling code here:
-        String placa, motorista, modelo;
-        int numero, poltrona;
-        String data;
-
-        numero = Integer.parseInt(txtNumero.getText());
-        placa = txtPlaca.getText();
-        motorista = txtMotorista.getText();
-        modelo = txtModelo.getText();
-        data = formtext.getText();
-        poltrona = Integer.parseInt(txtPoltrona.getText());
-
-        VeiculoDTO objveiculodto = new VeiculoDTO();
-        objveiculodto.setNumero_v(numero);
-        objveiculodto.setPlaca_v(placa);
-        objveiculodto.setMotorista_v(motorista);
-        objveiculodto.setModelo_v(modelo);
-        objveiculodto.setData_v(data);
-        objveiculodto.setPoltrona_v(poltrona);
-
-        VeiculoDAO objveiculodao = new VeiculoDAO();
-        objveiculodao.cadastrarVeiculo(objveiculodto);
-
-        this.dispose();
-
-    }//GEN-LAST:event_AlterarActionPerformed
+    private void btnALterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnALterarActionPerformed
+       AlterarVeiculo();
+       limparCampo();
+       listarValoresVeiculo();
+    }//GEN-LAST:event_btnALterarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnCarregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCarregarActionPerformed
+        carregarCampos();
+    }//GEN-LAST:event_btnCarregarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -321,10 +325,9 @@ public class alterarVeiculos extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton Alterar;
+    private javax.swing.JButton btnALterar;
     private javax.swing.JButton btnCancelar;
-    private javax.swing.JFormattedTextField formtext;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnCarregar;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -335,10 +338,97 @@ public class alterarVeiculos extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tabelaVeiculo;
+    private javax.swing.JTextField txtData;
     private javax.swing.JTextField txtModelo;
     private javax.swing.JTextField txtMotorista;
     private javax.swing.JTextField txtNumero;
     private javax.swing.JTextField txtPlaca;
     private javax.swing.JTextField txtPoltrona;
     // End of variables declaration//GEN-END:variables
+
+    private void listarValoresVeiculo() {
+        try {
+
+            VeiculoDAO objveiculodao = new VeiculoDAO();
+
+            DefaultTableModel model = (DefaultTableModel) tabelaVeiculo.getModel();
+            model.setNumRows(0);
+
+            ArrayList<VeiculoDTO> lista = objveiculodao.AtualizarVeiculo();
+
+            for (int num = 0; num < lista.size(); num++) {
+                model.addRow(new Object[]{
+                    lista.get(num).getNumero_v(),
+                    lista.get(num).getPlaca_v(),
+                    lista.get(num).getMotorista_v(),
+                    lista.get(num).getModelo_v(),
+                    lista.get(num).getData_v(),
+                    lista.get(num).getPoltrona_v()
+                });
+
+            }
+
+        } catch (Exception erro) {
+            JOptionPane.showMessageDialog(null, "Listar Valores View:" + erro);
+        }
+    }
+    
+    public void carregarCampos() {
+        int setar = tabelaVeiculo.getSelectedRow();
+        txtNumero.setText(tabelaVeiculo.getModel().getValueAt(setar, 0).toString());
+        txtPlaca.setText(tabelaVeiculo.getModel().getValueAt(setar, 1).toString());
+        txtMotorista.setText(tabelaVeiculo.getModel().getValueAt(setar, 2).toString());
+        txtModelo.setText(tabelaVeiculo.getModel().getValueAt(setar, 3).toString());
+        txtData.setText(tabelaVeiculo.getModel().getValueAt(setar, 4).toString());
+        txtPoltrona.setText(tabelaVeiculo.getModel().getValueAt(setar, 5).toString());
+
+    }
+    
+    public void limparCampo(){
+        txtNumero.setText("");
+        txtPlaca.setText("");
+        txtMotorista.setText("");
+        txtModelo.setText("");
+        txtData.setText("");
+        txtPoltrona.setText("");
+        
+    }
+
+    private void AlterarVeiculo() {
+        String placa, motorista, modelo;
+        int numero, poltrona;
+        String data;
+        
+        numero = Integer.parseInt(txtNumero.getText());
+        placa = txtPlaca.getText();
+        motorista = txtMotorista.getText();
+        modelo = txtModelo.getText();
+        data = txtData.getText();
+        poltrona = Integer.parseInt(txtPoltrona.getText());
+
+        VeiculoDTO veiculodto = new VeiculoDTO();
+        veiculodto.setNumero_v(numero);
+        veiculodto.setPlaca_v(placa);
+        veiculodto.setMotorista_v(motorista);
+        veiculodto.setModelo_v(modelo);
+        veiculodto.setData_v(data);
+        veiculodto.setPoltrona_v(poltrona);
+        
+        VeiculoDAO veiculodao = new VeiculoDAO();
+        veiculodao.alterarVeiculo(veiculodto);
+        
+        
+
+    }
+
+    
+    
+
+
+
+
+
+
+
+
 }

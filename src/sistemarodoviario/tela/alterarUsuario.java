@@ -5,6 +5,12 @@
  */
 package sistemarodoviario.tela;
 
+import DAO.UsuarioDAO;
+import DTO.UsuarioDTO;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author rafae
@@ -16,6 +22,23 @@ public class alterarUsuario extends javax.swing.JFrame {
      */
     public alterarUsuario() {
         initComponents();
+        listarValoresUsuario();
+
+        setLocationRelativeTo(this);
+    }
+
+    private static alterarUsuario instancia = null;
+
+    /**
+     * Creates new form TelaCadAluno
+     */
+
+    public static alterarUsuario getInstancia() {
+        if (instancia == null) {
+            instancia = new alterarUsuario();
+        }
+
+        return instancia;
     }
 
     /**
@@ -40,13 +63,15 @@ public class alterarUsuario extends javax.swing.JFrame {
         txtNome = new javax.swing.JTextField();
         txtSenha = new javax.swing.JPasswordField();
         jLabel1 = new javax.swing.JLabel();
-        btnConfirmar = new javax.swing.JButton();
+        btnAlterar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelaUsuario = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
+        btnCarregar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Alterar Usuario");
+        setAlwaysOnTop(true);
 
         jPanel1.setBackground(new java.awt.Color(0, 153, 204));
 
@@ -148,12 +173,12 @@ public class alterarUsuario extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Dados do Usuário");
 
-        btnConfirmar.setBackground(new java.awt.Color(102, 204, 255));
-        btnConfirmar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        btnConfirmar.setText("Confirmar");
-        btnConfirmar.addActionListener(new java.awt.event.ActionListener() {
+        btnAlterar.setBackground(new java.awt.Color(102, 204, 255));
+        btnAlterar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnAlterar.setText("Alterar");
+        btnAlterar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnConfirmarActionPerformed(evt);
+                btnAlterarActionPerformed(evt);
             }
         });
 
@@ -173,14 +198,27 @@ public class alterarUsuario extends javax.swing.JFrame {
 
             },
             new String [] {
-                "LOGIN", "NOME", "CARGO", "EMAIL"
+                "LOGIN", "NOME", "CARGO", "SENHA", "EMAIL"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, true, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(tabelaUsuario);
 
-        jButton1.setBackground(new java.awt.Color(102, 204, 255));
-        jButton1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jButton1.setText("Carregar Campos");
+        btnCarregar.setBackground(new java.awt.Color(102, 204, 255));
+        btnCarregar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnCarregar.setText("Carregar Campos");
+        btnCarregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCarregarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -189,17 +227,17 @@ public class alterarUsuario extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(34, 34, 34)
                 .addComponent(jLabel1)
-                .addContainerGap(350, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(19, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton1)
+                    .addComponent(btnCarregar)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 424, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btnCancelar)
                         .addGap(18, 18, 18)
-                        .addComponent(btnConfirmar)))
+                        .addComponent(btnAlterar)))
                 .addGap(20, 20, 20))
         );
         jPanel1Layout.setVerticalGroup(
@@ -210,12 +248,12 @@ public class alterarUsuario extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
-                .addComponent(jButton1)
+                .addComponent(btnCarregar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnConfirmar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -224,7 +262,7 @@ public class alterarUsuario extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -246,34 +284,22 @@ public class alterarUsuario extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNomeActionPerformed
 
-    private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
+    private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
+AlterarUsuario();
+limparCampo();
+listarValoresUsuario();
+        
 
-        String login, nome, cargo, senha,email;
-
-        login = txtLogin.getText();
-        nome = txtNome.getText();
-        cargo = txtCargo.getText();
-        senha = txtSenha.getText();
-        email = txtEmail.getText();
-
-        UsuarioDTO objusuariodto = new UsuarioDTO();
-        objusuariodto.setLogin_u(login);
-        objusuariodto.setNome_u(nome);
-        objusuariodto.setCargo_u(cargo);
-        objusuariodto.setSenha_u(senha);
-        objusuariodto.setEmail_u(email);
-
-        UsuarioDAO objusuariodao = new UsuarioDAO();
-        objusuariodao.cadastrarUsuario(objusuariodto);
-
-        this.dispose();
-
-    }//GEN-LAST:event_btnConfirmarActionPerformed
+    }//GEN-LAST:event_btnAlterarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
         dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnCarregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCarregarActionPerformed
+        carregarCampos();
+    }//GEN-LAST:event_btnCarregarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -311,9 +337,9 @@ public class alterarUsuario extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAlterar;
     private javax.swing.JButton btnCancelar;
-    private javax.swing.JButton btnConfirmar;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnCarregar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -330,4 +356,71 @@ public class alterarUsuario extends javax.swing.JFrame {
     private javax.swing.JTextField txtNome;
     private javax.swing.JPasswordField txtSenha;
     // End of variables declaration//GEN-END:variables
+
+    private void listarValoresUsuario() {
+        try {
+
+            UsuarioDAO objusuariodao = new UsuarioDAO();
+
+            DefaultTableModel model = (DefaultTableModel) tabelaUsuario.getModel();
+            model.setNumRows(0);
+
+            ArrayList<UsuarioDTO> lista1 = objusuariodao.AtualizarUsuario1();
+
+            for (int num = 0; num < lista1.size(); num++) {
+                model.addRow(new Object[]{
+                    lista1.get(num).getLogin_u(),
+                    lista1.get(num).getNome_u(),
+                    lista1.get(num).getCargo_u(),
+                    lista1.get(num).getSenha_u(),
+                    lista1.get(num).getEmail_u(),});
+
+            }
+
+        } catch (Exception erro) {
+            JOptionPane.showMessageDialog(null, "Listar Valores View:" + erro);
+        }
+    }
+
+    public void carregarCampos() {
+        int setar = tabelaUsuario.getSelectedRow();
+        txtLogin.setText(tabelaUsuario.getModel().getValueAt(setar, 0).toString());
+        txtNome.setText(tabelaUsuario.getModel().getValueAt(setar, 1).toString());
+        txtCargo.setText(tabelaUsuario.getModel().getValueAt(setar, 2).toString());
+        txtSenha.setText(tabelaUsuario.getModel().getValueAt(setar, 3).toString());
+        txtEmail.setText(tabelaUsuario.getModel().getValueAt(setar, 4).toString());
+
+    }
+    
+    public void limparCampo(){
+        txtLogin.setText("");
+        txtNome.setText("");
+        txtCargo.setText("");
+        txtSenha.setText("");
+        txtEmail.setText("");
+        
+    }
+
+    private void AlterarUsuario() {
+        String login, nome, cargo, senha, email;
+        login = txtLogin.getText();
+        nome = txtNome.getText();
+        cargo = txtCargo.getText();
+        senha = txtSenha.getText();
+        email = txtEmail.getText();
+
+        UsuarioDTO objusuariodto = new UsuarioDTO();
+        objusuariodto.setLogin_u(login);
+        objusuariodto.setNome_u(nome);
+        objusuariodto.setCargo_u(cargo);
+        objusuariodto.setSenha_u(senha);
+        objusuariodto.setEmail_u(email);
+        
+        UsuarioDAO objusuariodao = new UsuarioDAO();
+        objusuariodao.alterarUsuario(objusuariodto);
+        
+        
+
+    }
+
 }

@@ -102,6 +102,32 @@ public class VeiculoDAO {
         
     }
     
+     public void alterarVeiculo(VeiculoDTO veiculodto) {
+        String sql = "UPDATE veiculo SET   placa_v = ?, motorista_v = ?, modelo_v = ?, data_v= ?, poltrona_v = ? where numero_v = ?";
+
+        conn = new ConexaoDAO().conectaBD();
+
+        try {
+
+            pstm = conn.prepareStatement(sql);
+            
+            pstm.setString(1, veiculodto.getPlaca_v());
+            pstm.setString(2, veiculodto.getMotorista_v());
+            pstm.setString(3, veiculodto.getModelo_v());
+            pstm.setString(4, veiculodto.getData_v());
+             pstm.setInt(5, veiculodto.getPoltrona_v());
+             pstm.setInt(6, veiculodto.getNumero_v());
+
+            pstm.execute();
+            pstm.close();
+
+        } catch (SQLException erro) {
+            JOptionPane.showMessageDialog(null, "UsuarioDAO Alterar" + erro);
+        }
+
+}
+    
+    
     public ResultSet listaVeiculo(){
         conn = new ConexaoDAO().conectaBD();
         String sql = "select modelo_v, poltrona_v from veiculo";
