@@ -117,5 +117,27 @@ public class UsuarioDAO {
         }
 
     }
+    
+    public void alterarUsuario(UsuarioDTO objusuariodto) {
+        String sql = "UPDATE `usuario` SET `login_u` = ?, `nome_u` = ?, `cargo_u`= ?, `senha_u` = ?, `email_u`= ? ";
 
+        conn = new ConexaoDAO().conectaBD();
+
+        try {
+
+            pstm = conn.prepareStatement(sql);
+            pstm.setString(1, objusuariodto.getLogin_u());
+            pstm.setString(1, objusuariodto.getNome_u());
+            pstm.setString(1, objusuariodto.getCargo_u());
+            pstm.setString(1, objusuariodto.getSenha_u());
+            pstm.setString(1, objusuariodto.getEmail_u());
+
+            pstm.execute();
+            pstm.close();
+
+        } catch (SQLException erro) {
+            JOptionPane.showMessageDialog(null, "UsuarioDAO Excluir" + erro);
+        }
+
+}
 }

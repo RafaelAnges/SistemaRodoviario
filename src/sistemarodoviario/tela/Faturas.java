@@ -180,7 +180,6 @@ public class Faturas extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel4.setText("FATURAMENTOS");
 
-        tabelaFaturas.setBackground(new java.awt.Color(0, 0, 0));
         tabelaFaturas.setForeground(new java.awt.Color(0, 153, 204));
         tabelaFaturas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {

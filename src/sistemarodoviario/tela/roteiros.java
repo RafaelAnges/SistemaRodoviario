@@ -126,7 +126,6 @@ public class roteiros extends javax.swing.JFrame {
                 .addContainerGap(28, Short.MAX_VALUE))
         );
 
-        tabelaRoteiros.setBackground(new java.awt.Color(0, 0, 0));
         tabelaRoteiros.setForeground(new java.awt.Color(0, 153, 204));
         tabelaRoteiros.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
